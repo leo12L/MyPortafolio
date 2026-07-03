@@ -1,0 +1,41 @@
+/* ─── Íconos de redes sociales ─── */
+
+/* Fila de íconos debajo de la tarjeta */
+.redes-sociales {
+  margin-top: 1.75rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transform-origin: top center;
+  will-change: transform;
+}
+
+/* Botón individual de cada red */
+.red-boton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(17, 24, 39, 0.25);
+  background: rgba(255, 255, 255, 0.7);
+  color: #111827;
+  backdrop-filter: blur(6px);
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.red-boton:hover {
+  background: #111827;
+  color: var(--blanco);
+  border-color: transparent;
+  transform: scale(1.12);
+}
+
+/* Tamaño del SVG dentro del botón */
+.red-icono {
+  width: 18px;
+  height: 18px;
+}

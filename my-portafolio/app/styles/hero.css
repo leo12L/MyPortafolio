@@ -1,0 +1,159 @@
+/* ─── Hero: sección principal con animación de scroll ─── */
+
+.hero-seccion {
+  position: relative;
+  height: 980vh; /* 620 recorrido original + 100 hold del destino + 260 alejamiento */
+}
+
+.hero-pantalla {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--crema);
+}
+
+/* ── Barra de navegación ── */
+
+.nav-envoltorio {
+  position: absolute;
+  top: 1.25rem;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-pastilla {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 9999px;
+  background: #111827;
+  padding: 0.625rem 1.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+.nav-nombre {
+  font-family: var(--fuente-titulo);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--blanco);
+  letter-spacing: 0.04em;
+}
+
+.nav-puntos {
+  color: #4b5563;
+  font-size: 0.625rem;
+  letter-spacing: 0.25em;
+}
+
+/* ── Texto grande: SOFTWARE ENGINEER ── */
+
+.hero-texto {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 4rem;
+  padding: 0 1.25rem;
+  user-select: none;
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+
+.hero-linea-uno {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.hero-linea-dos {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.hero-titulo {
+  font-family: var(--fuente-titulo);
+  font-size: clamp(32px, 7vw, 104px);
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  color: #111827;
+}
+
+.hero-estrella {
+  flex-shrink: 0;
+  color: #111827;
+  width: clamp(22px, 2.5vw, 40px);
+  height: clamp(22px, 2.5vw, 40px);
+}
+
+.hero-rayo {
+  flex-shrink: 0;
+  color: #111827;
+  margin-bottom: 0.4rem;
+  width: clamp(20px, 3vw, 42px);
+  height: clamp(32px, 4.5vw, 70px);
+}
+
+/* ── Imagen de fondo: zoom hacia el arbolito y luego cambia a la 2ª imagen ── */
+
+.hero-fondo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: url('/hero-fondo.jpg') center center / cover no-repeat;
+  transform-origin: 78% 42%; /* punto del arbolito, a la derecha de la imagen */
+  will-change: opacity, transform;
+}
+
+.hero-fondo-2 {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: url('/hero-fondo-2.jpg') center center / cover no-repeat;
+  transform-origin: 50% 50%;
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+.hero-fondo-velo {
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  background: rgba(240, 237, 231, 0.55);
+  pointer-events: none;
+}
+
+/* ── Barra inferior: año y eslogan ── */
+
+.hero-barra-inferior {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  user-select: none;
+  pointer-events: none;
+}
+
+.hero-anio {
+  font-family: var(--fuente-titulo);
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: var(--blanco);
+}
+
+.hero-eslogan {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--texto-suave);
+  text-transform: uppercase;
+}
