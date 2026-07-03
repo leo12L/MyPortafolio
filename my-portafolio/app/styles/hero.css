@@ -2,7 +2,7 @@
 
 .hero-seccion {
   position: relative;
-  height: 980vh; /* 620 recorrido original + 100 hold del destino + 260 alejamiento */
+  height: 250vh; /* recorrido de scroll para que la tarjeta baje */
 }
 
 .hero-pantalla {
@@ -10,7 +10,7 @@
   top: 0;
   height: 100vh;
   overflow: hidden;
-  background: var(--crema);
+  background: var(--crema); /* fondo beige sólido */
 }
 
 /* ── Barra de navegación ── */
@@ -99,35 +99,6 @@
   height: clamp(32px, 4.5vw, 70px);
 }
 
-/* ── Imagen de fondo: zoom hacia el arbolito y luego cambia a la 2ª imagen ── */
-
-.hero-fondo {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background: url('/hero-fondo.jpg') center center / cover no-repeat;
-  transform-origin: 78% 42%; /* punto del arbolito, a la derecha de la imagen */
-  will-change: opacity, transform;
-}
-
-.hero-fondo-2 {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: url('/hero-fondo-2.jpg') center center / cover no-repeat;
-  transform-origin: 50% 50%;
-  opacity: 0;
-  will-change: opacity, transform;
-}
-
-.hero-fondo-velo {
-  position: absolute;
-  inset: 0;
-  z-index: 7;
-  background: rgba(240, 237, 231, 0.55);
-  pointer-events: none;
-}
-
 /* ── Barra inferior: año y eslogan ── */
 
 .hero-barra-inferior {
@@ -147,7 +118,7 @@
   font-family: var(--fuente-titulo);
   font-weight: 800;
   font-size: 1.5rem;
-  color: var(--blanco);
+  color: #111827; /* oscuro para contrastar con el fondo beige */
 }
 
 .hero-eslogan {

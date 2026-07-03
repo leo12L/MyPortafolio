@@ -46,40 +46,14 @@ const REDES = [
   { nombre: 'LinkedIn', href: '#', Icono: LinkedInIcon },
 ]
 
-// El recorrido original (árbol → destino) medía 620vh (420 de hero + 200 de
-// "sección dos"). Al terminar, el destino queda acercado al montecito (imagen #7)
-// y se SOSTIENE quieto durante ALTO_HOLD antes de arrancar el segundo alejamiento
-// (cerca → medio → lejos). Todas las fases de antes se reescalan por
-// ESCALA_ANTERIOR para conservar su mismo largo en vh dentro del total ampliado.
-const ALTO_ANTERIOR = 420 + 200
-const ALTO_HOLD = 100 // el destino (#7) se mantiene sólido antes de alejarse
-const ALTO_ALEJAMIENTO = 260
-const ALTO_TOTAL = ALTO_ANTERIOR + ALTO_HOLD + ALTO_ALEJAMIENTO
-const ESCALA_ANTERIOR = ALTO_ANTERIOR / ALTO_TOTAL
-// Inicio del segundo alejamiento, ya pasado el hold del destino.
-const INICIO_ALEJAMIENTO = (ALTO_ANTERIOR + ALTO_HOLD) / ALTO_TOTAL
-
-// Proporción que ocupaba el hero dentro del recorrido total,
-// se usa para reconstruir las mismas fases de antes dentro de un solo progreso.
-const LIMITE_HERO = 420 / ALTO_TOTAL
-
-// La animación de la tarjeta (giro, escala, color, texto e iconos) debe
-// terminar justo cuando el fondo-2 llega a su opacidad sólida (progreso 0.34
-// del recorrido original, ver "salidaArbol" más abajo), para que no siga
-// girando con el fondo ya quieto.
-const LIMITE_TARJETA = 0.34 * ESCALA_ANTERIOR
+// El giro/color de la tarjeta ocurre en la primera parte del scroll; el resto
+// del recorrido se usa para que termine de bajar hasta su posición final.
+const LIMITE_TARJETA = 0.6
 
 /* ─── Página ─── */
 
 export default function Page() {
   const seccionRef = useRef<HTMLDivElement>(null)
-  const fondoRef = useRef<HTMLDivElement>(null)
-  const fondoRef2 = useRef<HTMLDivElement>(null)
-  const fondoDosRef = useRef<HTMLDivElement>(null)
-  const fondoDosDestinoRef = useRef<HTMLDivElement>(null)
-  const fondoPanoramaRef = useRef<HTMLDivElement>(null)
-  const fondoMedioRef = useRef<HTMLDivElement>(null)
-  const fondoMontanaRef = useRef<HTMLDivElement>(null)
   const tarjetaRef = useRef<HTMLDivElement>(null)
   const tarjetaEnvoltorioRef = useRef<HTMLDivElement>(null)
   const fotoRef = useRef<HTMLImageElement>(null)
@@ -97,69 +71,10 @@ export default function Page() {
       const desplazado = Math.max(0, -rect.top)
       const progreso = Math.min(1, desplazado / totalDesplazable)
 
-      // Progreso "local" de cada mitad, calculado a partir del progreso único
-      // de toda la sección — así todo corre sobre un solo scroll continuo.
+      // El giro/color de la tarjeta corre más rápido que el recorrido completo.
       const progresoTarjeta = Math.min(1, progreso / LIMITE_TARJETA)
-      // El desvanecimiento de la tarjeta debe conservar su ventana original de
-      // 200vh (LIMITE_HERO → ESCALA_ANTERIOR), sin estirarse hacia los 260vh
-      // del nuevo alejamiento añadidos después.
-      const progresoSeccionDos = Math.max(
-        0,
-        Math.min(1, (progreso - LIMITE_HERO) / (ESCALA_ANTERIOR - LIMITE_HERO))
-      )
 
-      // Fondo: imágenes encadenadas por crossfades continuos y superpuestos
-      // (sin cortes binarios), calculados directamente sobre el progreso único
-      // — así se ven igual de suaves subiendo que bajando.
-      const rampa = (inicio: number, fin: number) =>
-        Math.min(1, Math.max(0, (progreso - inicio) / (fin - inicio)))
-
-      // Fases del recorrido original, reescaladas por ESCALA_ANTERIOR para
-      // conservar su mismo largo en vh dentro del recorrido total ampliado.
-      const salidaArbol = rampa(0.2 * ESCALA_ANTERIOR, 0.34 * ESCALA_ANTERIOR) // árbol → panorámica
-      const salidaPanoramica = rampa(0.56 * ESCALA_ANTERIOR, 0.74 * ESCALA_ANTERIOR) // panorámica → alejamiento (revela el montecito)
-      const zoomMontecito = rampa(0.74 * ESCALA_ANTERIOR, 0.88 * ESCALA_ANTERIOR) // acercamiento notorio hacia el montecito, ya revelado
-      const salidaAlejamiento = rampa(0.88 * ESCALA_ANTERIOR, 0.98 * ESCALA_ANTERIOR) // alejamiento (ya acercado) → destino
-
-      // Alejar y volver a enfocar: tras el hold del montecito, la cámara se
-      // ALEJA hasta el panorama (revela el paisaje) y luego se ACERCA a la
-      // montaña más grande. Ocupa el tramo [A0, 1]; pa(f) mapea una fracción
-      // f∈[0,1] del tramo a su progreso global.
-      const A0 = INICIO_ALEJAMIENTO
-      const pa = (f: number) => A0 + f * (1 - A0)
-
-      // Escala de cámara COMPARTIDA por todas las capas de este tramo: primero
-      // zoom-out (1.5 → 1.0, alejarse) y luego zoom-in (1.0 → 1.6, acercarse a
-      // la montaña). Al compartir la misma escala en cada instante no hay saltos
-      // en los crossfades: solo cambia la imagen de fondo bajo un movimiento
-      // continuo de cámara.
-      const alejar = rampa(pa(0), pa(0.42)) // fase A: 1.5 → 1.0
-      const acercar = rampa(pa(0.42), pa(1)) // fase B: 1.0 → 1.6
-      const escalaCamara = 1.5 - alejar * 0.5 + acercar * 0.6
-
-      // Opacidad — Fase A (alejar): montecito → panorama.
-      //           Fase B (acercar): panorama → medio → montaña.
-      const opPanorama = Math.min(
-        rampa(pa(0.02), pa(0.2)),
-        1 - rampa(pa(0.5), pa(0.62))
-      )
-      const opMedio = Math.min(
-        rampa(pa(0.5), pa(0.62)),
-        1 - rampa(pa(0.78), pa(0.9))
-      )
-      const opMontana = rampa(pa(0.78), pa(0.9))
-
-      const zoomFase = Math.min(1, progreso / (0.2 * ESCALA_ANTERIOR))
-      if (fondoRef.current) {
-        fondoRef.current.style.transform = `scale(${1 + zoomFase * 0.6})`
-        fondoRef.current.style.opacity = String(1 - salidaArbol)
-      }
-      if (fondoRef2.current) {
-        fondoRef2.current.style.transform = `scale(${1.2 - salidaArbol * 0.2})`
-        fondoRef2.current.style.opacity = String(Math.min(salidaArbol, 1 - salidaPanoramica))
-      }
-
-      // Tarjeta: gira 360° en horizontal, crece x2.4 y pasa de blanco y negro a color
+      // Tarjeta: gira 180° en horizontal, crece y pasa de blanco y negro a color
       const rotacion = progresoTarjeta * 180
       const escala = 1 + progresoTarjeta * 0.8
       const sinColor = Math.max(0, 1 - progresoTarjeta * 2)
@@ -183,63 +98,33 @@ export default function Page() {
 
       // Íconos de redes: se mantienen sólidos y siguen a la tarjeta mientras crece
       if (redesRef.current) {
-        const alturaTarjeta = 210 // debe coincidir con .card-rotate en card-rotate.css
+        const alturaTarjeta = 180 // aprox. alto de .card-rotate
         const desplazamientoRedes = ((escala - 1) * alturaTarjeta) / 2
         const escalaRedes = 1 + progresoTarjeta * 0.5
         redesRef.current.style.transform = `translateY(${desplazamientoRedes}px) scale(${escalaRedes})`
       }
 
-      // Alejamiento: primero se revela (entra cerca y se aleja, 1.15 → 1.0)
-      // y, ya revelado, hace un acercamiento notorio hacia el montecito
-      // (el punto marcado) antes de cambiar a la imagen de destino
-      if (fondoDosRef.current) {
-        const escalaRevelado = 1.15 - salidaPanoramica * 0.15
-        fondoDosRef.current.style.transform = `scale(${escalaRevelado + zoomMontecito * 0.5})`
-        fondoDosRef.current.style.opacity = String(Math.min(salidaPanoramica, 1 - salidaAlejamiento))
-      }
-      if (fondoDosDestinoRef.current) {
-        // El montecito llega a su zoom final (imagen #7), se sostiene durante el
-        // hold y luego se ALEJA (1.5 → 1.0) mientras se desvanece hacia el panorama.
-        const zoomFinal = rampa(0.88 * ESCALA_ANTERIOR, ESCALA_ANTERIOR)
-        fondoDosDestinoRef.current.style.opacity = String(
-          Math.min(salidaAlejamiento, 1 - rampa(pa(0.02), pa(0.2)))
-        )
-        fondoDosDestinoRef.current.style.transform = `scale(${1.15 + zoomFinal * 0.35 - alejar * 0.5})`
-      }
-
-      // Alejar y volver a enfocar: las 3 capas comparten escalaCamara (zoom-out
-      // en la fase de alejar, zoom-in en la de acercarse a la montaña grande).
-      if (fondoPanoramaRef.current) {
-        fondoPanoramaRef.current.style.opacity = String(opPanorama)
-        fondoPanoramaRef.current.style.transform = `scale(${escalaCamara})`
-      }
-      if (fondoMedioRef.current) {
-        fondoMedioRef.current.style.opacity = String(opMedio)
-        fondoMedioRef.current.style.transform = `scale(${escalaCamara})`
-      }
-      if (fondoMontanaRef.current) {
-        fondoMontanaRef.current.style.opacity = String(opMontana)
-        fondoMontanaRef.current.style.transform = `scale(${escalaCamara})`
-      }
-
-      // La tarjeta se mantiene sólida durante todo el recorrido del hero, y se
-      // desvanece rápido apenas empezamos a bajar por la segunda mitad
+      // Tarjeta: inicia ARRIBA y centrada, y al bajar por el scroll se desplaza
+      // hacia el centro/izquierda (una diagonal). El envoltorio está anclado al
+      // centro del viewport (left:50% top:50%) y se mueve con transform en px.
       if (tarjetaEnvoltorioRef.current) {
-        const desvanecimientoTarjeta = Math.min(1, progresoSeccionDos * 6)
-        tarjetaEnvoltorioRef.current.style.opacity = String(1 - desvanecimientoTarjeta)
-        tarjetaEnvoltorioRef.current.style.pointerEvents =
-          desvanecimientoTarjeta >= 1 ? 'none' : 'auto'
-
-        // Arranca centrada y se desplaza a 8rem del borde izquierdo al bajar
-        const centradoFase = Math.min(1, progreso / (0.15 * ESCALA_ANTERIOR))
         const remPx = 16
         const anchoTarjeta = tarjetaEnvoltorioRef.current.offsetWidth
-        const centroViewport = window.innerWidth / 2
-        const posicionCentrada = -anchoTarjeta / 2
-        const posicionIzquierda = 8 * remPx - centroViewport
-        const traslacionX =
-          posicionCentrada + (posicionIzquierda - posicionCentrada) * centradoFase
-        tarjetaEnvoltorioRef.current.style.transform = `translate(${traslacionX}px, -50%)`
+        const altoTarjeta = tarjetaEnvoltorioRef.current.offsetHeight
+        const centroViewportX = window.innerWidth / 2
+        const alturaViewport = window.innerHeight
+
+        // Horizontal: de centrada (0 respecto al centro) a 8rem del borde izq.
+        const xCentrada = -anchoTarjeta / 2
+        const xIzquierda = 8 * remPx - centroViewportX
+        const traslacionX = xCentrada + (xIzquierda - xCentrada) * progreso
+
+        // Vertical: de arriba (cerca del nav) a un poco por debajo del centro.
+        const yArriba = -altoTarjeta / 2 - alturaViewport * 0.3
+        const yFinal = -altoTarjeta / 2 + alturaViewport * 0.08
+        const traslacionY = yArriba + (yFinal - yArriba) * progreso
+
+        tarjetaEnvoltorioRef.current.style.transform = `translate(${traslacionX}px, ${traslacionY}px)`
       }
     }
 
@@ -251,20 +136,10 @@ export default function Page() {
   return (
     <div>
       {/* ═══════════════════════════════════════
-          HERO — una sola animación continua controlada por scroll
+          HERO — fondo beige sólido; la tarjeta inicia arriba y baja al scrollear
       ═══════════════════════════════════════ */}
       <section ref={seccionRef} className="hero-seccion">
         <div className="hero-pantalla">
-
-          {/* Las 4 capas de fondo: árbol → frame intermedio → alejamiento → destino */}
-          <div ref={fondoRef} className="hero-fondo" />
-          <div ref={fondoRef2} className="hero-fondo-2" />
-          <div ref={fondoDosRef} className="seccion-dos-fondo" />
-          <div ref={fondoDosDestinoRef} className="seccion-dos-fondo-destino" />
-          <div ref={fondoPanoramaRef} className="hero-fondo-panorama" />
-          <div ref={fondoMedioRef} className="hero-fondo-medio" />
-          <div ref={fondoMontanaRef} className="hero-fondo-montana" />
-          <div className="hero-fondo-velo" />
 
           {/* Pastilla de navegación */}
           <div className="nav-envoltorio">
@@ -274,13 +149,13 @@ export default function Page() {
             </div>
           </div>
 
-          {/* Texto grande SOFTWARE ENGINEER */}
+          {/* Texto grande FULL STACK DEVELOPER */}
           <div ref={textoHeroRef} className="hero-texto">
             <div className="hero-linea-uno">
               <svg className="hero-estrella" viewBox="0 0 40 40" fill="currentColor">
                 <path d="M20 0 L21.8 18.2 L40 20 L21.8 21.8 L20 40 L18.2 21.8 L0 20 L18.2 18.2 Z" />
               </svg>
-              <span className="hero-titulo">FULL STACL</span>
+              <span className="hero-titulo">FULL STACK</span>
             </div>
             <div className="hero-linea-dos">
               <span className="hero-titulo">DEVELOPER</span>
@@ -290,11 +165,11 @@ export default function Page() {
             </div>
           </div>
 
-          {/* Tarjeta giratoria + redes sociales — columna izquierda */}
+          {/* Tarjeta giratoria + redes sociales */}
           <div ref={tarjetaEnvoltorioRef} className="tarjeta-envoltorio">
             <div className="tarjeta-contenedor">
               <div ref={tarjetaRef} className="card-rotate">
-                <Image ref={fotoRef} src="/hero.jpg" alt="Alex García" fill className="card-foto" />
+                <Image ref={fotoRef} src="/hero.jpg" alt="Leonardo Muñoz" fill className="card-foto" />
               </div>
               <div ref={redesRef} className="redes-sociales">
                 {REDES.map(({ nombre, href, Icono }) => (

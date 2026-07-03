@@ -1,10 +1,11 @@
 /* ─── Tarjeta giratoria con animación de scroll ─── */
 
-/* Arranca centrada y se desplaza a la izquierda al bajar (controlado por JS) */
+/* Anclada al centro del viewport; el movimiento (arriba → centro/izquierda)
+   lo controla JS con transform en px. */
 .tarjeta-envoltorio {
   position: absolute;
   left: 50%;
-  top: 62%;
+  top: 50%;
   transform: translate(-50%, -50%);
   z-index: 20;
   display: flex;
