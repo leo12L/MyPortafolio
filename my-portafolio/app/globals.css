@@ -1,0 +1,7 @@
+@import 'tailwindcss';
+
+@import './styles/fundacion.css';
+@import './styles/hero.css';
+@import './styles/card-rotate.css';
+@import './styles/redes-sociales.css';
+@import './styles/seccion-dos.css';
