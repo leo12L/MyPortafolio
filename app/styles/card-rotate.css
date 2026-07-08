@@ -42,3 +42,31 @@
   object-fit: cover;
   object-position: top center;
 }
+
+/* ── Responsive: tarjeta estática (sin giro) en móvil ── */
+
+@media (max-width: 768px) {
+  .tarjeta-envoltorio {
+    position: static;
+    width: 100%;
+    z-index: 1;
+  }
+
+  .tarjeta-contenedor {
+    width: 100%;
+    max-width: 340px;
+    margin: 0 auto;
+  }
+
+  .card-rotate {
+    height: auto;
+    aspect-ratio: 3 / 4;
+    /* Anula cualquier giro/escala de grises residual de la animación. */
+    transform: none !important;
+    filter: none !important;
+  }
+
+  .card-foto {
+    transform: none !important;
+  }
+}

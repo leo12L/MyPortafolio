@@ -156,3 +156,55 @@
   width: 20px;
   height: 20px;
 }
+
+/* ── Responsive: perfil visible y apilado en móvil ── */
+
+@media (max-width: 768px) {
+  /* Sin animación: el bloque de perfil se muestra en flujo normal. */
+  .hero-info {
+    position: static;
+    inset: auto;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .perfil-bloques {
+    position: static;
+    left: auto;
+    right: auto;
+    top: auto;
+    transform: none;
+    width: 100%;
+  }
+
+  .perfil-bloque {
+    gap: 1.25rem;
+  }
+
+  .perfil-bloque--sobre,
+  .perfil-bloque--asp {
+    align-items: flex-start;
+  }
+
+  .perfil-separador {
+    margin: 2rem 0;
+  }
+
+  .perfil-icono {
+    width: 52px;
+    height: 52px;
+  }
+
+  .perfil-icono svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  /* Footer de redes: centrado y en flujo. */
+  .perfil-footer {
+    position: static;
+    justify-content: center;
+    margin-top: 2.25rem;
+    padding: 0;
+  }
+}

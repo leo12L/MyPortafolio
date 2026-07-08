@@ -15,3 +15,13 @@
 body {
   font-family: var(--fuente-ui);
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Los saltos por anclas del menú aterrizan debajo del navbar flotante. */
+section[id],
+span[id] {
+  scroll-margin-top: 5.5rem;
+}

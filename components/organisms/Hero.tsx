@@ -22,10 +22,35 @@ export function Hero() {
   const infoRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    // A partir de este ancho, el hero se apila de forma estática (sin la
+    // coreografía de scroll, que está pensada para pantallas anchas).
+    const BP_MOVIL = 768
+
+    // Quita los estilos inline que fija la animación para que el CSS móvil tome
+    // el control (importa al redimensionar de escritorio a móvil).
+    const limpiarEstilos = () => {
+      const reset = (el: HTMLElement | null, props: string[]) => {
+        if (!el) return
+        props.forEach((p) => el.style.removeProperty(p))
+      }
+      reset(tarjetaRef.current, ['height', 'border-radius', 'transform', 'filter'])
+      reset(tarjetaEnvoltorioRef.current, ['left', 'top', 'width'])
+      reset(fotoRef.current, ['transform'])
+      reset(textoHeroRef.current, ['opacity', 'transform'])
+      reset(infoRef.current, ['opacity', 'pointer-events'])
+      reset(pantallaRef.current, ['background-color'])
+    }
+
     const alScrollear = () => {
       const seccion = seccionRef.current
       const tarjeta = tarjetaRef.current
       if (!seccion || !tarjeta) return
+
+      // En móvil no se anima: se muestra el layout estático definido en CSS.
+      if (window.innerWidth <= BP_MOVIL) {
+        limpiarEstilos()
+        return
+      }
 
       const rect = seccion.getBoundingClientRect()
       const totalDesplazable = seccion.offsetHeight - window.innerHeight
@@ -103,7 +128,11 @@ export function Hero() {
 
     alScrollear()
     window.addEventListener('scroll', alScrollear, { passive: true })
-    return () => window.removeEventListener('scroll', alScrollear)
+    window.addEventListener('resize', alScrollear)
+    return () => {
+      window.removeEventListener('scroll', alScrollear)
+      window.removeEventListener('resize', alScrollear)
+    }
   }, [])
 
   return (

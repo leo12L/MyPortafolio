@@ -213,3 +213,56 @@
   background: rgba(26, 35, 56, 0.05);
   transform: translateY(-2px);
 }
+
+/* ── Responsive: hero estático apilado en móvil ── */
+
+@media (max-width: 768px) {
+  /* Sin recorrido de scroll: la sección fluye con su contenido. */
+  .hero-seccion {
+    height: auto;
+  }
+
+  .hero-pantalla {
+    position: static;
+    height: auto;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 2.5rem;
+    padding: 6.5rem clamp(1.25rem, 6vw, 2.25rem) 3.5rem;
+  }
+
+  /* Texto: ancho completo, en flujo normal. */
+  .hero-texto {
+    position: static;
+    width: 100%;
+    height: auto;
+    padding: 0;
+    justify-content: flex-start;
+  }
+
+  .hero-titulo {
+    white-space: normal;
+    font-size: clamp(2.4rem, 13vw, 3.6rem);
+  }
+
+  .hero-subtitulo {
+    max-width: 100%;
+  }
+
+  /* El ancla de "Sobre mí" no aplica sin la animación. */
+  .hero-ancla-sobremi {
+    display: none;
+  }
+}
+
+@media (max-width: 380px) {
+  .hero-botones {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .btn {
+    justify-content: center;
+  }
+}
