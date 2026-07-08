@@ -1,0 +1,34 @@
+/* ─── Fila de redes sociales (icono + etiqueta, con separadores) ─── */
+
+.hero-social {
+  margin-top: 2.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.social-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--tinta);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: opacity 0.2s ease;
+}
+
+.social-item:not(:first-child) {
+  border-left: 1px solid var(--linea);
+  padding-left: 1rem;
+}
+
+.social-item:hover {
+  opacity: 0.55;
+}
+
+.social-icono {
+  width: 18px;
+  height: 18px;
+}

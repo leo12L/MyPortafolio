@@ -1,0 +1,152 @@
+/* ─── Sección Stack (categoría + grid de tecnologías, tema claro beige) ─── */
+
+.stack-seccion {
+  --rojo: #e0403f;
+  --cobre: #c9a878;
+  --tinta: #1a2338;
+  --linea: rgba(26, 35, 56, 0.12);
+
+  position: relative;
+  overflow: hidden;
+  background: #f1eee8;
+  color: #1a2338;
+  padding: clamp(3rem, 8vh, 6rem) clamp(1.25rem, 4vw, 4.5rem);
+  font-family: var(--fuente-ui);
+}
+
+
+.stack-seccion > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Encabezado ── */
+
+.st-header {
+  margin-bottom: clamp(2.5rem, 5vh, 4rem);
+}
+
+.st-titulo {
+  font-family: var(--fuente-titulo);
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  font-weight: 800;
+  color: var(--tinta);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+}
+
+.st-dash {
+  display: block;
+  width: 64px;
+  height: 3px;
+  margin: 1rem 0 1.5rem;
+  border-radius: 2px;
+  background: var(--rojo);
+}
+
+.st-sub {
+  max-width: 42rem;
+  color: #6f6e73;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.st-gh {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  color: var(--tinta);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  opacity: 0.75;
+  transition: opacity 0.2s ease;
+}
+
+.st-gh:hover {
+  opacity: 1;
+}
+
+.st-gh-ico {
+  width: 15px;
+  height: 15px;
+}
+
+/* ── Grupos: categoría a la izquierda + tecnologías a la derecha ── */
+
+.st-grupos {
+  display: flex;
+  flex-direction: column;
+}
+
+.st-fila {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 2rem;
+  align-items: start;
+  padding: clamp(1.5rem, 3vh, 2.5rem) 0;
+  border-top: 1px solid var(--linea);
+}
+
+.st-fila:last-child {
+  border-bottom: 1px solid var(--linea);
+}
+
+.st-cat {
+  font-size: clamp(1.3rem, 2.2vw, 1.9rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--tinta);
+}
+
+.st-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 1.1rem 1.5rem;
+}
+
+.st-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  cursor: pointer;
+  transition: transform 0.4s;
+}
+
+.st-item:hover {
+  transform: scale(1.2);
+}
+
+.st-item-ico {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+}
+
+.st-item-svg {
+  width: 22px;
+  height: 22px;
+}
+
+.st-item-name {
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  font-size: 0.9rem;
+  color: #2b3346;
+  white-space: nowrap;
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 720px) {
+  .st-fila {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  .st-items {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+}

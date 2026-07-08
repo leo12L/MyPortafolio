@@ -1,0 +1,139 @@
+/* ─── Sección Contacto / CTA (fondo negro) ─── */
+
+.cta-seccion {
+  --rojo: #e0403f;
+  --cobre: #c9a878;
+
+  position: relative;
+  overflow: hidden;
+  background: #0c0e14;
+  color: #f1eee8;
+  padding: clamp(4rem, 12vh, 8rem) clamp(1.25rem, 4vw, 4.5rem);
+  font-family: var(--fuente-ui);
+}
+
+.cta-seccion::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(45% 55% at 85% 0%, rgba(201, 168, 120, 0.14), transparent 70%),
+    radial-gradient(50% 60% at 5% 100%, rgba(224, 64, 63, 0.12), transparent 70%);
+}
+
+.cta-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 60rem;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cta-etiqueta {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--cobre);
+  margin-bottom: 1.5rem;
+}
+
+.cta-titulo {
+  font-family: var(--fuente-titulo);
+  font-size: clamp(2.6rem, 8vw, 6rem);
+  font-weight: 800;
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+}
+
+.cta-sub {
+  max-width: 34rem;
+  margin: 1.5rem 0 2.75rem;
+  color: rgba(241, 238, 232, 0.65);
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+.cta-boton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 1rem 2rem;
+  border-radius: 9999px;
+  background: #f1eee8;
+  color: #0c0e14;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.cta-boton:hover {
+  transform: translateY(-3px);
+  background: #ffffff;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.45);
+}
+
+.cta-boton-flecha {
+  width: 18px;
+  height: 18px;
+}
+
+/* ── Redes ── */
+
+.cta-redes {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 3.5rem;
+}
+
+.cta-red {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: rgba(241, 238, 232, 0.7);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.cta-red:hover {
+  color: #ffffff;
+}
+
+.cta-red-ico {
+  width: 18px;
+  height: 18px;
+}
+
+.cta-pie {
+  position: relative;
+  z-index: 1;
+  max-width: 60rem;
+  margin: clamp(4rem, 10vh, 7rem) auto 0;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(241, 238, 232, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  color: rgba(241, 238, 232, 0.45);
+  font-size: 0.82rem;
+}
+
+@media (max-width: 560px) {
+  .cta-redes {
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+  .cta-pie {
+    flex-direction: column;
+    text-align: center;
+  }
+}

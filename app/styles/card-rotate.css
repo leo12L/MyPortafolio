@@ -1,0 +1,44 @@
+/* ─── Tarjeta giratoria con animación de scroll ─── */
+
+/* Anclada al centro del viewport; el movimiento (arriba → centro/izquierda)
+   lo controla JS con transform en px. */
+.tarjeta-envoltorio {
+  position: absolute;
+  left: 0;
+  top: 0;
+  /* La posición y el tamaño los fija el JS con left/top/width en px. */
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  will-change: opacity, transform;
+}
+
+/* Agrupa la tarjeta y las redes sociales; centra los íconos bajo la imagen */
+.tarjeta-contenedor {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* La tarjeta en sí: hereda el ancho del envoltorio; JS controla alto/giro/color */
+.card-rotate {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow:
+    0 25px 50px -12px rgba(0, 0, 0, 0.4),
+    0 10px 20px -5px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+  will-change: transform, filter;
+}
+
+/* La foto dentro de la tarjeta */
+.card-foto {
+  object-fit: cover;
+  object-position: top center;
+}

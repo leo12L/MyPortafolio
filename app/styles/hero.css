@@ -1,0 +1,215 @@
+/* ─── Hero: sección principal con animación de scroll ─── */
+
+.hero-seccion {
+  position: relative;
+  height: 250vh; /* recorrido de scroll para la animación de la card */
+}
+
+/* Ancla invisible: al hacerle scroll, el hero ya reveló "Sobre mí" */
+.hero-ancla-sobremi {
+  position: absolute;
+  top: 48%;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+.hero-pantalla {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  /* Color base (inicio); el JS lo interpola hacia otro tono según el scroll */
+  background-color: #f1eee8;
+}
+
+/* ── Pastilla de navegación (arriba, centrada) ── */
+
+.nav-envoltorio {
+  position: fixed;
+  top: 1.5rem;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  pointer-events: none; /* no bloquea el resto de la página */
+}
+
+.nav-menu {
+  position: relative;
+  pointer-events: auto;
+}
+
+.nav-pastilla {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  border-radius: 9999px;
+  background: var(--tinta);
+  padding: 0.85rem 2rem;
+  cursor: pointer;
+  box-shadow: 0 14px 30px rgba(26, 35, 56, 0.28), 0 2px 6px rgba(26, 35, 56, 0.2);
+  transition: transform 0.25s ease;
+}
+
+.nav-menu:hover .nav-pastilla {
+  transform: translateY(-1px);
+}
+
+/* Enlaces horizontales: se despliegan ampliando la pastilla */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-width 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease,
+    margin-left 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nav-menu:hover .nav-links {
+  max-width: 640px;
+  opacity: 1;
+  margin-left: 0.5rem;
+}
+
+.nav-link {
+  padding: 0.5rem 0.9rem;
+  border-radius: 9999px;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--blanco);
+}
+
+/* Eco/duplicado sutil detrás para dar profundidad */
+.nav-pastilla::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--tinta);
+  opacity: 0.28;
+  transform: translate(-7px, 9px);
+  z-index: -1;
+}
+
+.nav-nombre {
+  font-family: var(--fuente-ui);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--blanco);
+  letter-spacing: 0.22em;
+}
+
+.nav-puntos {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 1rem;
+  letter-spacing: 0.15em;
+  line-height: 1;
+  max-width: 2rem;
+  overflow: hidden;
+  transition: max-width 0.35s ease, opacity 0.25s ease, margin 0.35s ease;
+}
+
+/* Al desplegar el menú, los "···" desaparecen */
+.nav-menu:hover .nav-puntos {
+  max-width: 0;
+  opacity: 0;
+  margin: 0;
+}
+
+/* ── Contenido izquierdo ── */
+
+.hero-texto {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  padding: 0 clamp(2rem, 5vw, 5.5rem);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  will-change: opacity, transform;
+}
+
+.hero-titulo {
+  font-family: var(--fuente-titulo);
+  font-size: clamp(30px, 5vw, 88px);
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: var(--tinta);
+  white-space: nowrap;
+}
+
+.hero-subtitulo {
+  margin-top: 1.5rem;
+  max-width: 28rem;
+  font-size: clamp(15px, 1.15vw, 19px);
+  line-height: 1.5;
+  color: var(--texto-sub);
+}
+
+/* Botones */
+.hero-botones {
+  margin-top: 2.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1rem 1.6rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.btn-icono {
+  width: 16px;
+  height: 16px;
+}
+
+.btn-primario {
+  background: var(--tinta);
+  color: var(--blanco);
+  box-shadow: 0 10px 22px rgba(26, 35, 56, 0.22);
+}
+
+.btn-primario:hover {
+  transform: translateY(-2px);
+}
+
+.btn-secundario {
+  background: transparent;
+  color: var(--tinta);
+  border: 1.5px solid rgba(26, 35, 56, 0.25);
+}
+
+.btn-secundario:hover {
+  background: rgba(26, 35, 56, 0.05);
+  transform: translateY(-2px);
+}

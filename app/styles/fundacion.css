@@ -1,0 +1,17 @@
+/* ─── Variables globales compartidas ─── */
+
+:root {
+  --crema: #f1eee8;
+  --tinta: #1a2338; /* navy oscuro: títulos, botón, logo */
+  --texto-sub: #6f6e73; /* gris del subtítulo */
+  --texto-tenue: #8b8b90; /* gris de etiquetas pequeñas */
+  --blanco: #ffffff;
+  --linea: rgba(26, 35, 56, 0.18);
+  --fuente-titulo: 'Playfair Display', Georgia, serif; /* títulos elegantes (serif) */
+  --fuente-ui: 'Inter', system-ui, sans-serif; /* cuerpo / UI */
+  --fuente-serif: 'Playfair Display', Georgia, serif;
+}
+
+body {
+  font-family: var(--fuente-ui);
+}

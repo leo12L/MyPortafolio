@@ -1,0 +1,12 @@
+@import 'tailwindcss';
+/* estilos del sitio por sección */
+
+@import './styles/fundacion.css';
+@import './styles/hero.css';
+@import './styles/card-rotate.css';
+@import './styles/redes-sociales.css';
+@import './styles/perfil.css';
+@import './styles/experiencia.css';
+@import './styles/skills.css';
+@import './styles/proyectos.css';
+@import './styles/contacto.css';

@@ -1,0 +1,158 @@
+/* ─── Estado final (perfil): se revela al hacer scroll ─── */
+
+.hero-info {
+  position: absolute;
+  inset: 0;
+  z-index: 15;
+  opacity: 0;
+  pointer-events: none;
+  will-change: opacity;
+}
+
+/* ── Bloques de contenido a la derecha ── */
+
+.perfil-bloques {
+  position: absolute;
+  left: 43%;
+  right: 7%;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+}
+
+.perfil-bloque {
+  display: flex;
+  gap: 2.5rem;
+}
+
+.perfil-bloque--sobre {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.perfil-bloque--asp {
+  align-items: flex-start;
+}
+
+.perfil-bloque-texto {
+  max-width: 34rem;
+}
+
+.perfil-etiqueta {
+  display: inline-block;
+  padding-left: 0.85rem;
+  border-left: 3px solid var(--tinta);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--texto-tenue);
+  margin-bottom: 1.1rem;
+}
+
+.perfil-titulo {
+  font-family: var(--fuente-titulo);
+  font-size: clamp(1.7rem, 2.6vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  color: var(--tinta);
+}
+
+.perfil-dash {
+  display: block;
+  width: 34px;
+  height: 3px;
+  background: var(--tinta);
+  margin: 0.9rem 0 1.4rem;
+}
+
+.perfil-parrafo {
+  font-size: 0.98rem;
+  line-height: 1.75;
+  color: var(--texto-sub);
+  max-width: 34rem;
+}
+
+.perfil-separador {
+  height: 1px;
+  background: rgba(26, 35, 56, 0.15);
+  margin: 2.5rem 0;
+}
+
+.perfil-icono {
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: rgba(26, 35, 56, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--tinta);
+  box-shadow: 0 8px 18px rgba(26, 35, 56, 0.08);
+}
+
+.perfil-icono svg {
+  width: 26px;
+  height: 26px;
+}
+
+.perfil-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 3rem;
+  margin-top: 1.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--tinta);
+  color: var(--tinta);
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: gap 0.2s ease;
+}
+
+.perfil-link:hover {
+  gap: 3.5rem;
+}
+
+.perfil-link-flecha {
+  width: 18px;
+  height: 18px;
+}
+
+/* ── Footer completo ── */
+
+.perfil-footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 1.75rem;
+  padding: 0 clamp(2rem, 4vw, 3.5rem);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.perfil-footer-der {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.perfil-social {
+  display: inline-flex;
+  color: var(--tinta);
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.perfil-social:hover {
+  opacity: 1;
+}
+
+.perfil-social-ico {
+  width: 20px;
+  height: 20px;
+}
