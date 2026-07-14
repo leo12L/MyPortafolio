@@ -1,6 +1,6 @@
 import { ArrowUpRightIcon } from '@/components/atoms/icons'
 import { SocialLinks } from '@/components/molecules/SocialLinks'
-import { EMAIL } from '@/lib/constants'
+import { EMAIL_COMPOSE_URL } from '@/lib/constants'
 
 /** CONTACTO — Trabajemos juntos. */
 export function ContactSection() {
@@ -13,7 +13,12 @@ export function ContactSection() {
           ¿Tienes un proyecto en mente o una idea que quieras construir? Escríbeme y hablemos de cómo
           puedo ayudarte a hacerla realidad.
         </p>
-        <a href={`mailto:${EMAIL}`} className="cta-boton">
+        <a
+          href={EMAIL_COMPOSE_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="cta-boton"
+        >
           Enviar un correo
           <ArrowUpRightIcon className="cta-boton-flecha" />
         </a>
